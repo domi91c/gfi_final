@@ -1,0 +1,81 @@
+<%- model_class = Request -%>
+
+
+<div class="page-header">
+  <%= form_tag requests_path, :method => "get" do |f| %>
+      <div class="span3">
+
+      </div>
+      <div class="span2 search-query search-query-rounded" style="display: inline-block">
+
+        <div style="display: inline-block">
+          <h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+
+          <%= text_field_tag :search, params[:search], placeholder: "Search Requests",
+                             :style => 'width: 500px; display: inline-block; height: 36px; vertical-align: middle;' %>
+          <%= button_tag("Search", type: 'submit', class: "btn btn-primary") do %>
+              <span class="glyphicon glyphicon-search"> </span> Search
+              </div>
+              <div class="form-inline">
+                <%= select_tag(:category, options_for_select(
+                        [['General'], ['Carpooling'], ['Delivery'],
+                         ['Labor'], ['Social'], ['Event'], ['Tutoring'],
+                         ['Studying']]), {class: "form-control", :style => "width:191px;", :prompt => "Category"}) %>
+
+
+
+                <%= select_tag(:city, options_for_select(
+                        [['All Toronto'], ['Downtown'], ['Etobicoke'],
+                         ['Scarborough'], ['Rouge Hill'], ['Pickering'], ['Ajax'],
+                         ['Oshawa']]),
+                               {class: "form-control", :style => "width:191px;", :prompt => Location}) %></div>
+              </div>
+
+
+              </div>
+          <% end %>
+
+  <% end %>
+
+
+
+
+
+  <table class="table table-striped table-responsive">
+
+    <tbody>
+    <!--paginate @requests -->
+
+    <% @requests.each do |request| %>
+
+        <tr>
+          <td>
+            <div style="margin-left: 5px" class="round-image-50">
+              <%= image_tag(request.user.logo.url(:small)) %>
+            </div>
+            <%= link_to request.user.name %></td>
+
+          <td><%= link_to request.title, request_path(request) %></td>
+          <td><%= request.city %></td>
+
+          <td><%= request.created_at.strftime("%H:%M %b %d") %></td>
+
+          <td>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @requests, renderer: BootstrapPagination::Rails %>
+
+  <% if user_signed_in? %>
+      <%= button_to new_request_path, class: "btn btn-large btn-inverse", :method => :get  do %>
+          New Request <i class="glyphicon glyphicon-plus"></i>
+      <% end %>
+
+  <% else %>
+      <%= button_to new_user_session_path, class: "btn btn-large btn-inverse" do %>
+          New Request <i class="glyphicon glyphicon-plus"></i>
+      <% end %>
+  <% end %>
+

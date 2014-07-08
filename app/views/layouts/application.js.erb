@@ -1,0 +1,12 @@
+jQuery(document).ready(function() {
+    //Hide all links
+    $(".link").hide();
+
+    //Add a listener to the radio buttons
+    $("#link_selector_request_link").change(function () {
+        var value = $(this).val();
+        $(".link").hide();      //Hide all links
+        $("." + value).show();  //Show the appropriate links
+    });
+
+});

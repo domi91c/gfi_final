@@ -1,0 +1,143 @@
+<h3><%= @user.name %></h3>
+<p><%= @user.email if @user.email %></p>
+<p><%= @user.email if @user.email %></p>
+Show address on map?
+
+
+<br>
+<%= button_to edit_user_registration_path, class: "btn btn-info", :method => :get  do %>
+    Edit Account <i class="glyphicon glyphicon-pencil"></i>
+<% end %>
+<br>
+<div class="form-group">
+
+
+
+
+  <% if @user == current_user %>
+      <%= render partial: 'avatars/form',
+                 object: @user,
+                 as: :avatarable %>
+
+        <% else %>
+        <div style="margin-left: 5px">
+          <%= image_tag(@user.logo.url(:medium) ) %>
+        </div>
+  <% end %>
+</div>
+<br>
+<br>
+
+<div class="col-xs-6"></div>
+
+
+
+<%- model_class = Profile -%>
+<div class="page-header">
+  <div id="">
+  </div>
+  <br>
+
+
+  <div id="worked">
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>  <br>
+    <br>  <br>
+    <br>  <br>
+    <br>
+  </div>
+
+
+
+  <br><br>
+  <div class="contain">
+    <h5>My Offers - <%= @offers.count %></h5>
+
+    <!--<h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>-->
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:title) %></th>
+        <th>Created</th>
+        <th><%= button_to new_offer_path, class: "btn btn-inverse", :method => :get  do %>
+            New <i class="glyphicon glyphicon-plus"></i>
+          <% end %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @offers.each do |offer| %>
+          <tr>
+
+
+            <td><%= link_to offer.title, offer_path(offer) %></td>
+            <td><%= offer.created_at.strftime("%I:%M %p, %b %d") %></td>
+            <td>
+              <%= button_to edit_offer_path(offer), :class => 'btn btn-info'   do %>
+                  <i class="glyphicon glyphicon-pencil"></i>
+              <% end %>
+              <%= button_to offer_path(offer),
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                            :class => 'btn' do %>
+                  <i class="glyphicon glyphicon-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+
+      <% end %>
+
+
+      </tbody>
+    </table>
+
+  </div>
+  </div>
+
+
+  <div class="contain">
+    <h5>My Requests - <%= @requests.count %></h5>
+    <!--<h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>-->
+
+    <table class="table table-striped">
+      <thead>
+
+      <tr>
+        <th><%= model_class.human_attribute_name(:title) %></th>
+        <th><%= model_class.human_attribute_name(:created) %></th>
+        <th><%= button_to new_offer_path, class: "btn btn-inverse", :method => :get  do %>
+              New <i class="glyphicon glyphicon-plus"></i>
+          <% end %></th>
+
+      </tr>
+
+      </thead>
+      <tbody>
+      <% @requests.each do |request| %>
+          <tr>
+
+            <td><%= link_to request.title, request_path(request) %></td>
+            <td><%= request.created_at.strftime("%I:%M %p, %b %d") %></td>
+            <td>
+              <%= button_to edit_request_path(request), :class => 'btn btn-info'   do %>
+                  <i class="glyphicon glyphicon-pencil"></i>
+              <% end %>
+              <%= button_to request_path(request),
+                            :method => :delete,
+                            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                            :class => 'btn' do %>
+                  <i class="glyphicon glyphicon-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+  </div>
+

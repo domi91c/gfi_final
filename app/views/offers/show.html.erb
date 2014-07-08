@@ -1,0 +1,56 @@
+<%- model_class = Offer -%>
+<div class="page-header">
+  <h4><strong>I need help with: </strong><div style="word-wrap: break-word; width: 80%"><%= @offer.title %></h4></div>
+  <h6><%= @offer.category %> Favors</h6>
+
+
+<div style="margin-left: 5px" class="round-image-50">
+  <%= image_tag(@offer.user.logo.url(:small) ) %>
+</div>
+<%= link_to @offer.user.name %>
+
+<br>
+
+
+  <div style="word-wrap: break-word; width: 80%; font-size: 20px"><%= @offer.description %> </div>
+
+<br>
+
+
+<br>
+
+<% if @offer.give.blank? %>
+
+    <% else %>
+    <h4><strong> In return, I will: </strong></h4>
+    <div style="word-wrap: break-word; width: 80%; font-size: 20px"><%= @offer.give %> </div>
+    <br>
+<% end %>
+
+
+<div class="form-actions" id="reply">
+  <% if @offer.user != current_user %>
+      <% if user_signed_in? %>
+          <%= link_to "Reply",
+                      newoffer_message_path(:offer => @offer.id), :class => 'btn'  %>
+          <% end %>
+
+        <% else %>
+      <%= link_to "Reply",
+                  new_user_session_path, :class => 'btn'  %>
+  <% end %>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              offers_path, :class => 'btn btn-info'  %>
+  <% if @offer.user == current_user %>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_offer_path(@offer), :class => 'btn btn-inverse' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  offer_path(@offer),
+                  :method => 'delete',
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                  :class => 'btn btn-danger' %>
+  <% end %>
+
+
+
+</div>

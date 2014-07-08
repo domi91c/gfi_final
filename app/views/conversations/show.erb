@@ -1,0 +1,50 @@
+<h4><strong>From:</strong> <%= conversation.originator.email %>:</h4>
+<p><strong> Replying to: </strong> <%= conversation.subject %>  </p>
+
+
+<table class="table-responsive table-striped" style="table-layout: fixed; width: 100%">
+  <tbody>
+
+
+  <% @message = conversation.messages %>
+  <% @message.each do |m| %>
+      <% conversation.mark_as_read(current_user) %>
+
+      <tr>
+<div style="vertical-align: top">
+        <% if m.sender != current_user %>
+              <td>
+
+              <div style="margin-left: 5px" class="round-image-50">
+                <%= image_tag(m.sender.logo.url(:small) ) %>
+              </div>
+              <%= link_to m.sender.name, m.sender %></td>
+      <% else %>
+            <td>
+                <div style="margin-left: 5px" class="round-image-50">
+                  <%= image_tag(m.sender.logo.url(:small) ) %>
+                </div>
+              <%= "Me" %></td>
+
+        <% end %>
+</div>
+        <td style="word-wrap: break-word; width: 70%"> <p><%= m.body %> </p></td>
+
+
+
+      </tr>
+
+  <% end %>
+
+  </tbody>
+</table>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+            conversations_path, :class => 'btn'  %>
+
+
+<td><%= link_to "Reply", {:controller => "messages", :action => "reply", :id => conversation.id}, :title => "Reply", :class => "btn btn-danger"  %></td>
+
+
+<div id="replypartial">
+</div>
+

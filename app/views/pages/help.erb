@@ -1,0 +1,87 @@
+<div class="jumbotron jumbotron-sm">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <h1 class="h1">
+          Need Help?
+          <small>Drop us a line.</small>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="col-md-6">
+    <div class="col-md-10">
+
+      <div class="container">
+        <div class="row-fluid">
+
+          <div class="col-md-5 well">
+            <%= bootstrap_form_tag do |f| %>
+
+
+                <div class="control-group">
+                  <div class="controls">
+
+                    <%= f.text_field :name, :class => 'input-large text_field' %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="controls">
+
+                    <%= f.text_field :email, :class => 'input-large text_field' %>
+                  </div>
+                </div>
+
+
+                <div class="control-group">
+                  <div class="span6">
+                    <%= f.text_area :message, :style => "width:510px; height: 300px  " %>
+                  </div>
+                </div>
+
+
+                <br>
+
+                <div class="controls">
+
+                  <%= f.submit "Submit", :class => 'btn btn-small mhm btn-info' %>
+                  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                              requests_path, :class => 'btn btn-small mhm btn-warning' %>
+                </div>
+                </div>
+            <% end %>
+
+            </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="col-md-6">
+  <form>
+    <legend><span class="glyphicon glyphicon-globe"></span> We need your help too!</legend>
+    <address>
+      <strong>We take suggestions seriously.</strong><br>
+
+      <div style="width: 50%"> What do you think could make Gofavorit a better place? We'll take your suggestions
+        seriously,
+        and if we end up using them, we'll post your name as a contributor.
+      </div>
+
+    </address>
+    <address>
+      <strong>Add us to your contacts:</strong><br>
+      <a href="mailto:#">gofavorit@gmail.com</a>
+    </address>
+  </form>
+</div>
+
+
+
+
+

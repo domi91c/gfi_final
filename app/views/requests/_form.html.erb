@@ -1,0 +1,120 @@
+<div class="col-md-10">
+
+  <div class="container">
+    <div class="row-fluid">
+
+      <div class="col-md-5 well">
+        <%= bootstrap_form_for @request, :html => {:multipart => true} do |f| %>
+
+
+            <div class="control-group">
+              <%= f.label :category, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.select(:category, options_for_select(
+                        [['General'], ['Carpooling'], ['Delivery'],
+                         ['Labor'], ['Social'], ['Event'], ['Tutoring'],
+                         ['Studying']]), {},
+                             {class: "form-control", :style => "width:191px;"}) %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <%= f.label :title, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.text_field :title, :class => 'input-large text_field' %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <%= f.label :description, :class => 'control-label' %>
+              <div class="span6">
+                <%= f.text_area :description, :style => "width:510px; height: 300px  " %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <%= f.label "What can I give? (optional)", :class => 'control-label' %>
+              <div class="span6">
+                <%= f.text_area :give, :style => "width:510px; height: 100  " %>
+              </div>
+            </div>
+
+
+            <div class="form-inline">
+              <div class="form-group">
+                <%= f.label "City", :class => 'control-label' %>
+                <br>
+                <%= f.text_field :city, :class => 'text_field', :style => "width:191px;" %>
+              </div>
+              <div class="form-group">
+                <%= f.label "State", :class => 'control-label' %>
+                <br>
+                <%= f.text_field :state, :class => 'text_field', :style => "width:191px;" %>
+              </div>
+
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <label class="checkbox" for="checkbox1">
+                  <span class="icons">
+                    <span class="first-icon fui-checkbox-unchecked"></span>
+                    <span class="second-icon fui-checkbox-checked"></span></span>
+                  Use my own address?
+                </label>
+              </div>
+            </div>
+
+
+
+
+            <div class="controls">
+              <%= f.submit nil, :class => 'btn btn-small mhm btn-info' %>
+              <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                          requests_path, :class => 'btn btn-small mhm btn-warning' %>
+            </div>
+
+
+
+
+
+
+
+
+
+      </div>
+
+
+      <div class="col-md-5 well">
+
+        <%= f.fields_for @request.gallery do |ff| %>
+
+           <h6> <STRONG>Add Pictures</STRONG></h6>
+            <div class="control-group">
+              <%= ff.label :pictures, :class => 'control-label' %>
+              <div class="controls">
+                <!-- The magic is coming ...look at my eyes....shazammmm -->
+                <%= file_field_tag "images[]", type: :file, multiple: true %>
+              </div>
+            </div>
+
+
+            <div class="control-group">
+              <%= ff.label :description, :class => 'control-label' %>
+              <div class="controls">
+                <%= ff.text_field :description, :class => 'text_field' %>
+              </div>
+            </div>
+
+
+        <% end %>
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

@@ -1,0 +1,80 @@
+<div class="col-md-10">
+  <!--<div class="alert alert-success"><strong><span class="glyphicon glyphicon-send"></span>  </strong></div>-->
+  <!--<div class="alert alert-danger"><span class="glyphicon glyphicon-alert"></span><strong> </strong></div>-->
+
+  <div class="container">
+    <div class="row-fluid">
+
+      <div class="col-md-5 well">
+        <%= bootstrap_form_for @offer, :html => {:multipart => true} do |f| %>
+
+            <%= f.alert_message "Please fix the errors below." %>
+
+
+            <div class="control-group">
+              <div class="controls">
+
+                <%= f.select(:category, options_for_select(
+                        [['General'], ['Carpooling'], ['Delivery'],
+                         ['Labor'], ['Social'], ['Event'], ['Tutoring'],
+                         ['Studying']]), {},
+                             {class: "form-control", :style => "width:191px;"}) %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+
+                <%= f.text_field :title, :class => 'input-large text_field' %>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="span6">
+                <%= f.text_area :description, :style => "width:510px; height: 300px  "%>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <p> "What can I give? (optional)" </p>
+              <div class="span6">
+                <%= f.text_area :give, :style => "width:510px; height: 100  ", hide_label: true %>
+              </div>
+            </div>
+
+
+            <div class="control-group">
+              <%= f.label :city, :class => 'control-label' %>
+              <div class="controls">
+                <%= f.select(:city, options_for_select(
+                        [['All Toronto'], ['Etobicoke'], ['Downtown Toronto'],
+                         ['Scarborough'], ['Rouge Hill'], ['Pickering'], ['Ajax']]), {hide_label: true},
+                             {class: "form-control", :style => "width:191px;"}) %>
+              </div>
+            </div>
+
+
+            <br>
+
+            <div class="controls">
+              <%= f.submit nil, :class => 'btn btn-small mhm btn-info' %>
+              <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                          requests_path, :class => 'btn btn-small mhm btn-warning' %>
+            </div>
+
+
+            </div>
+
+
+        <% end %>
+
+        </div>
+
+  </div>
+
+</div>
+
+
+
+
+

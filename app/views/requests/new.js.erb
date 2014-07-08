@@ -1,0 +1,6 @@
+$("<%= escape_javascript render(file: 'requests/_form.erb') %>").insertAfter('#reply');
+$('#new_comment_link').hide();
+
+
+$("<%= escape_javascript render(file: 'requests/new.erb') %>").insertAfter('#comments');
+$('#new_comment').hide().slideDown();

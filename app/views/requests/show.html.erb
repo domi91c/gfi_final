@@ -1,0 +1,84 @@
+<%- model_class = Request -%>
+<div class="page-header">
+  <h4><%= @request.title %></h4>
+  <h5><%= @request.category %></h5>
+
+</div>
+
+<div style="margin-left: 5px" class="round-image-50">
+  <%= image_tag(@request.user.logo.url(:small)) %>
+</div>
+<%= link_to @request.user.name %>
+
+<br>
+<dl class="dl-horizontal">
+
+
+  <p style="word-wrap: break-word"><%= @request.description %></p>
+</dl>
+
+
+<div class="row">
+  <div class="col-xs-6 col-sm-3"></div>
+
+  <div class="col-xs-6 col-sm-3"></div>
+
+  <ul class="thumbnails files">
+    <% @request.gallery.pictures.each do |pic| %>
+        <div class="span3" id="picture_<%= pic.id %>">
+          <div class="thumbnail col-xs-6 col-sm-3">
+            <%= image_tag pic.image.url %>
+            <div class="caption">
+              <p style="text-align: center;">
+
+
+              </p>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </ul>
+</div>
+<div class="form-actions">
+
+</div>
+<div class="form-actions" id="reply">
+  <% if @request.user != current_user %>
+      <% if user_signed_in %>
+          <%= link_to "Reply",
+                      new_message_path(:request => @request.id), :class => 'btn' %>
+      <% end %>
+
+  <% else %>
+      <%= link_to "Reply",
+                  new_user_session_path, :class => 'btn' %>
+  <% end %>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              requests_path, :class => 'btn btn-info' %>
+  <% if @request.user == current_user %>
+
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_request_path(@request), :class => 'btn btn-inverse' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  request_path(@request),
+                  :method => 'delete',
+                  :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
+                  :class => 'btn btn-danger' %>
+  <% end %>
+  <a href="#fakelink" class="btn btn-small btn-social-facebook">
+    <i class="fui-facebook"></i>
+    Share
+  </a>
+
+  <a href="#fakelink" class="btn btn-small btn-social-googleplus">
+    <i class="fui-googleplus"></i>
+    Plus
+  </a>
+
+  <a href="#fakelink" class="btn btn-small btn-social-twitter">
+    <i class="fui-twitter"></i>
+    Tweet
+  </a>
+
+
+</div>

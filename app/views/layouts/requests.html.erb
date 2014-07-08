@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GoFavorIt</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= csrf_meta_tags %>
+
+  <link rel="stylesheet" href="http://i.icomoon.io/public/temp/4d3f767796/UntitledProject2/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+  <div class="container-fluid">
+
+    <div class="">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+
+      </button>
+
+      <div class="pull-left" style="max-width:140px; margin-top: 5px; margin-left: -10px;">
+        <%= link_to(image_tag("gofavorit-green.png"), root_path) %>
+      </div>
+
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+
+
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-gift"></i> Favors<b class="caret"></b></a>
+          <ul class="btn-group select select-block mbl">
+
+            <li><%= link_to "View Offers", offers_path %></li>
+            <li><%= link_to "View Requests", requests_path %></li>
+            <% if user_signed_in? %>
+                <li><%= link_to "Add Offer", new_offer_path %></li>
+            <% else %>
+                <li><%= link_to "Add Offer", new_user_session_path %></li>
+            <% end %>
+            <% if user_signed_in? %>
+                <li><%= link_to "Add Request", new_request_path %></li>
+            <% else %>
+                <li><%= link_to "Add Request", new_user_session_path %></li>
+            <% end %>
+          </ul>
+        </li>
+
+        <% if user_signed_in? %>
+
+            <li><%= link_to conversations_path, :method => :get  do %>
+                  <i class="glyphicon glyphicon-envelope"></i> Inbox
+              <% end %>
+
+              <% if current_user.mailbox.inbox({:read => false}).count > 0 %>
+          <span class="navbar-new">
+              <%= current_user.mailbox.inbox({:read => false}).count %>
+          </span>
+                  </li>
+              <% end %>
+              <% @user = current_user %>
+              <li><li><%= link_to user_path(@user.id), :method => :get  do %>
+                  <i class="glyphicon glyphicon-home"></i> Profile
+              <% end %>
+            </li>
+        <% end %>
+        <li><a href="#">Help</a></li>
+
+        <% if user_signed_in? %>
+            <li class="active"><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+            <li class="active"><%= link_to "Sign In", new_user_session_path %></li>
+        <% end %>      </ul>
+
+
+      <% if user_signed_in? %>
+
+
+          <div style="margin-left: 5px" class="round-image-50">
+            <%= image_tag(current_user.logo.url(:small)) %>
+          </div>
+          <%= current_user.try(:name) %>
+
+
+      <% end %>
+
+      <div class="navbar-form navbar-right"><%= form_tag(offers_path, :method => :get) do %>
+          <%= text_field_tag :search, nil,
+                             {:id => "search-query-2", :placeholder => "Search offers...", } %>
+          <%= hidden_field_tag :use_keywords, "true" %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="headerbar2">
+
+  </div>
+
+</nav>
+
+<div style="padding-top: 60px; margin: 10px">
+  <div class="btn-group select select-block mbl pull-right" style="width: 200px;"><i class="dropdown-arrow"></i>
+    <button class="btn dropdown-toggle clearfix btn-info" data-toggle="dropdown">
+      <span class="filter-option pull-left">Toronto, ON</span>&nbsp;<span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" style="max-height: 887px; overflow-y: auto; min-height: 108px;">
+      <li rel="0" class="selected">
+        <dt>Profile</dt>
+        <a tabindex="-1" href="#" class="opt "><span class="pull-left">My Profile</span></a></li>
+      <li rel="1"><a tabindex="-1" href="#" class="opt "><span class="pull-left">My Friends</span></a></li>
+      <li rel="2">
+        <div class="divider"></div>
+        <dt>System</dt>
+        <a tabindex="-1" href="#" class="opt "><span class="pull-left">Messages</span></a></li>
+      <li rel="3"><a tabindex="-1" href="#" class="opt "><span class="pull-left">My Settings</span></a></li>
+      <li rel="4"><a tabindex="-1" href="#" class="opt highlighted fui-lock"><span class="pull-left">Logout</span></a>
+      </li>
+    </ul>
+  </div>
+
+  <h4>Toronto, ON</h4>
+  <ol class="breadcrumb" style="margin-bottom: 5px;">
+
+    <li><%= link_to "All Toronto", requests_path(:city_select => { :from => 'whatever', :to => 'whatever'}) %></li>
+    <li><%= link_to "Etobicoke", requests_path(:city => {:city => "Etobicoke"}) %></li>
+    <li><%= link_to "Downtown", requests_path(:city => {:city => "Downtown"}) %></li>
+    <li><%= link_to "Scarborough", requests_path(:city => {:city => "Scarborough"}) %></li>
+    <li><%= link_to "Rouge Hill", requests_path(:city => {:city => "Rouge Hill"}) %></li>
+    <li><%= link_to "Pickering", requests_path(:city => {:city => "Pickering"}) %></li>
+    <li><%= link_to "Ajax", requests_path(:city => {:city => "Ajax"}) %></li>
+    <li><%= link_to "Oshawa", requests_path(:city => {:city => "Oshawa"}) %></li>
+
+
+
+  </ol>
+  <p class="alert alert-success">
+    <%= notice %></p>
+  <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+
+</div>
+
+<!--<div class="logo page-header">-->
+
+<!--</div>-->
+<div class="headerbar2">
+
+</div>
+<div class="col-sm-3 col-md-2 sidebar-offcanvas well" id="sidebar" role="navigation">
+  <ul class="nav nav-list">
+    <li class="nav-header">Request Categories</li>
+    <!--<label class="radio">-->
+    <!--<#%= radio_button_tag('link_selector', 'offer_link') %>-->
+
+    <!--<span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>-->
+    <!--Offers-->
+    <!--</label>-->
+
+    <!--<label class="radio" id="radio_request">-->
+    <!--<#%= radio_button_tag('link_selector', "link_selector", id: "link_selector" )%>-->
+
+    <!--<span class="icons"><span class="first-icon fui-radio-unchecked"></span><span class="second-icon fui-radio-checked"></span></span>-->
+    <!--Requests-->
+    <!--</label>-->
+
+    <!--  <script>
+
+          jQuery(document).ready(function() {
+
+              $('#radio_request').find('input[name=link_selector]').change(function () {
+
+                  alert("radio received.");
+
+              });
+
+
+          });
+
+      </script>
+  -->
+    <!--
+        <#%= link_to "Text 1", requests_path, :class => 'link offer_link' %>
+        <#%= link_to "Text 1", offers_path, :class => 'link request_link' %>
+        <#%= link_to "Text 3", requests_path, :class => 'link offer_link' %>
+        <#%= link_to "Text 3", offers_path, :class => 'link request_link' %>
+        <#%= link_to "Text 4", requests_path, :class => 'link offer_link' %>
+        <#%= link_to "Text 4", offers_path, :class => 'link request_link' %>
+
+    -->
+
+
+
+    <li><%= link_to "Carpooling", requests_path(:category => {:category => "Carpooling"}) %></li>
+    <li> <%= link_to "Tutoring", requests_path(:category => {:category => "Tutoring"}) %></li>
+    <li><%= link_to "Studying", requests_path(:category => {:category => "Studying"}) %></li>
+    <li><%= link_to "Career", requests_path(:category => {:category => "Career"}) %></li>
+    <li><%= link_to "Art", requests_path(:category => {:category => "Art"}) %></li>
+    <li><%= link_to "Culture", requests_path(:category => {:category => "Culture"}) %></li>
+    <li><%= link_to "Learning", requests_path(:category => {:category => "Learning"}) %></li>
+    <li><%= link_to "Events", requests_path(:category => {:category => "Events"}) %></li>
+    <li><%= link_to "Delivery", requests_path(:category => {:category => "Delivery"}) %></li>
+    <li><%= link_to "Labor", requests_path(:category => {:category => "Labor"}) %></li>
+    <li><%= link_to "Social", requests_path(:category => {:category => "Social"}) %></li>
+
+
+  </ul>
+
+</div>
+
+
+<div class="col-sm-9 col-md-10 main">
+  <%= yield :scripts %>
+  <%= yield %>
+
+</div>
+
+<!-- Codes by HTML.am -->
+
+</body>
+
+</html>
